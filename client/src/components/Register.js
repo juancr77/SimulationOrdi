@@ -1,18 +1,17 @@
-// client/src/components/Register.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { register } from '../services/api';
-import { useHistory } from 'react-router-dom';
 
 const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const history = useHistory();
+  const navigate = useNavigate(); // Cambia useHistory por useNavigate
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await register({ username, password });
-      history.push('/login');
+      navigate('/login'); // Cambia history.push por navigate
     } catch (error) {
       console.error('Error registering user:', error);
     }

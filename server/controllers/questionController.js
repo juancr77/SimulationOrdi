@@ -1,12 +1,12 @@
-const Question = require('../models/questionModel');
+const { getQuestions } = require('../models/questionModel');
 
-const getQuestions = (req, res) => {
-  const { level, limit } = req.query;
-  
-  Question.getQuestionsByLevel(level, parseInt(limit), (err, questions) => {
-    if (err) return res.status(500).send(err);
-    res.status(200).send(questions);
-  });
+const fetchQuestions = async (req, res) => {
+  try {
+    const questions = await getQuestions();
+    res.json(questions);
+  } catch (error) {
+    res.status(500).json({ message: 'Error getting questions' });
+  }
 };
 
-module.exports = { getQuestions };
+module.exports = { fetchQuestions };
